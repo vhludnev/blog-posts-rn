@@ -1,23 +1,24 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { globalStyles } from '../theme'
 
 export const AboutScreen = ({}) => {
   return (
-    <View style={styles.center}>
+    <View style={globalStyles.center}>
       <Text>Best App for personal notes.</Text>
       <Text>
-        App version <Text style={styles.version}>1.2.0</Text>
+        App version <Text style={styles.version}>1.2.5</Text>
       </Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+  // center: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center'
+  // },
   version: {
     fontFamily: 'open-bold'
   }

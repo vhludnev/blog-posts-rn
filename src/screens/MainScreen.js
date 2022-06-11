@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, View, ActivityIndicator } from 'react-native'
 import { PostList } from '../components/PostList'
-
+import SearchBar from '../components/SearchBar'
 import { loadPosts } from '../store/post'
-import { THEME } from '../theme'
-//import { loadPosts } from '../store/actions/post'
+import { THEME, globalStyles } from '../theme'
 
 export const MainScreen = ({ navigation }) => {
+  const [term, setTerm] = useState('')
+  const [allPostsArr, setAllPostsArr] = useState([])
+  const refInput = useRef('')
   const openPostHandler = post => {
     navigation.navigate('Post', {
       booked: post.booked,
@@ -22,7 +24,7 @@ export const MainScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(loadPosts())
-  }, [dispatch])
+  }, [])
 
   //const allPosts = useSelector(state => state.post.allPosts)
   //const status = useSelector(state => state.post.status)
@@ -31,22 +33,37 @@ export const MainScreen = ({ navigation }) => {
   const postsData = useSelector(state => state.post)
   const { allPosts, status } = postsData
 
-  if (status !== 'success') {
+  useEffect(() => {
+    setAllPostsArr(allPosts)
+  },[allPosts])
+  
+  const searchHandler = (term) => {
+    return setAllPostsArr(allPosts.filter(post => post.text.toLowerCase().includes(term.toLowerCase())))
+  }
+
+  if (status === 'loading') {
     return (
-      <View style={styles.center}>
+      <View style={globalStyles.center}>
         <ActivityIndicator size='large' color={THEME.MAIN_COLOR} />
       </View>
     )
   }
 
-  return <PostList data={allPosts} onOpen={openPostHandler} />
+  return (
+    <>
+      {allPosts.length >= 3 && (
+        <SearchBar 
+          term={term}
+          onTermChange={setTerm}
+          onTermSubmit={() => searchHandler(term)} 
+          refInput={refInput}
+          clearSearch={() => {setTerm(''); setAllPostsArr(allPosts)}}
+        />
+      )}
+      {refInput.current && allPostsArr && allPostsArr.length !== allPosts.length ? (
+        <Text style={{marginLeft: 10}}>We have found {allPostsArr.length} {allPostsArr.length === 1 ? 'result' : 'results'} </Text>
+      ) : null}
+      <PostList data={allPostsArr} onOpen={openPostHandler} />
+    </>
+  )
 }
-
-
-const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})

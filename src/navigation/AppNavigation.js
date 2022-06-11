@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Item, HeaderButtons } from 'react-navigation-header-buttons'
-import { Platform, Text, View } from 'react-native'
+import { Platform, Text/* , View */ } from 'react-native'
 import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
 import { BookedScreen } from '../screens/BookedScreen'
@@ -13,7 +13,7 @@ import { AboutScreen } from '../screens/AboutScreen'
 import { CreateScreen } from '../screens/CreateScreen'
 import { AppHeaderIcon } from '../components/AppHeaderIcon';
 import { Ionicons } from '@expo/vector-icons'
-import { THEME } from '../theme'
+import { THEME/* , globalStyles */ } from '../theme'
 import moment from 'moment'
 
 const Stack = createStackNavigator()

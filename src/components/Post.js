@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Pressable } from 'react-native'
-import { toogleBooked } from '../store/post'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Ionicons } from '@expo/vector-icons'
+import { View, StyleSheet, ImageBackground, Text, TouchableOpacity, Pressable } from 'react-native'
+import { toogleBooked } from '../store/post'
+import { globalStyles } from '../theme'
 
 export const Post = ({ post, onOpen }) => {
   const dispatch = useDispatch()
@@ -11,7 +12,7 @@ export const Post = ({ post, onOpen }) => {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(post)}>
       <View style={styles.post}>
-        <ImageBackground style={styles.image} source={{ uri: post.img }}>
+        <ImageBackground style={globalStyles.image} source={{ uri: post.img }}>
           <View style={styles.textWrap}>
             <Text style={styles.title}>
               {moment(new Date(post.date)).format('DD/MM/YYYY HH:MM')}
@@ -37,12 +38,13 @@ export const Post = ({ post, onOpen }) => {
 const styles = StyleSheet.create({
   post: {
     marginBottom: 15,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderRadius: 5
   },
-  image: {
-    width: '100%',
-    height: 200
-  },
+  // image: {
+  //   width: '100%',
+  //   height: 200
+  // },
   textWrap: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     paddingVertical: 5,

@@ -24,7 +24,8 @@ export const PostList = ({ data = [], onOpen }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 10
+    padding: 10,
+    marginBottom: 60
   },
   noItems: {
     fontFamily: 'open-regular',

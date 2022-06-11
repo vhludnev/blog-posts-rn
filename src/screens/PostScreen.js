@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ScrollView, View, TextInput, StyleSheet, Image, Alert, LogBox, Dimensions, TouchableHighlight, Modal, Pressable  } from 'react-native'
 import ImageZoom from 'react-native-image-pan-zoom'
-import { THEME } from '../theme'
+import { THEME, globalStyles } from '../theme'
 import { toogleBooked, removePost, textUpdatePost } from '../store/post'
 import { Ionicons } from '@expo/vector-icons'
+import useDimentions from '../hooks/useDimentions'
 
 LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state' ])
 
@@ -12,10 +13,12 @@ export const PostScreen = ({ navigation, route }) => {
   const { id: postId } = route.params
   const [modalVisible, setModalVisible] = useState(false)
   const [newText, setNewText] = useState('')
-  const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width)
-  const [deviceHeight, setDeviceHeight] = useState(Dimensions.get('window').height)
+  //const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width)
 
+  const { display, width, height } = useDimentions()
   const dispatch = useDispatch()
+
+  //const deviceHeight = Dimensions.get('window').height
 
   const post = useSelector(state =>
     state.post.allPosts.find(p => p.id === postId)
@@ -53,8 +56,8 @@ export const PostScreen = ({ navigation, route }) => {
         { text: 'Delete', 
           style: 'destructive', 
           onPress() {
+            dispatch(removePost(postId))
             navigation.navigate('Main')
-            dispatch(removePost(postId)) 
           }
         }
       ],
@@ -67,42 +70,39 @@ export const PostScreen = ({ navigation, route }) => {
   }, [])
 
   // dinamically change view when screen turns:
-  useEffect(() => {
-    const updateWidth = () => { setDeviceWidth(Dimensions.get('window').width) }
-    const updateHeight = () => { setDeviceHeight(Dimensions.get('window').height) }
+  // useEffect(() => {
+  //   const updateWidth = () => setDeviceWidth(Dimensions.get('window').width)
 
-    Dimensions.addEventListener('change', updateWidth)
-    Dimensions.addEventListener('change', updateHeight)
+  //   Dimensions.addEventListener('change', updateWidth)
 
-    return () => { 
-      Dimensions.addEventListener('change', updateWidth).remove() 
-      Dimensions.addEventListener('change', updateHeight).remove() 
-    }
-  })
+  //   return () => { 
+  //     Dimensions.addEventListener('change', updateWidth).remove() 
+  //   }
+  // })
 
   if (!post) {
     return null
   }
 
   return (
-    <> 
-      <View style={[styles.centeredView, { width: deviceWidth }]}>
+    <>   
         <Modal
+          //style={{ width: deviceWidth }}
           animationType="fade"
           transparent={true}
           visible={modalVisible}
         >
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <View style={[styles.centeredView, styles.modalView]}>
               <ImageZoom 
-                cropWidth={deviceWidth}
-                cropHeight={deviceHeight}
-                imageWidth={deviceWidth}
-                imageHeight={deviceWidth > deviceHeight ? deviceHeight : '100%'}
+                cropWidth={width}
+                cropHeight={display === 'PORTRAIT' ? height + 25 : height}
+                imageWidth={width}
+                imageHeight={display === 'PORTRAIT' ? height : '100%'}
                 maxOverflow={0}>
                 <Image 
                   source={{ uri: post.img }} 
-                  style={{ height: deviceWidth > deviceHeight ? deviceHeight : '100%', width: deviceWidth, resizeMode: 'contain' }} 
+                  style={{ height: display === 'PORTRAIT' ? height : '100%', width: width, resizeMode: 'contain' }} 
                 />
               </ImageZoom>
               <View style={styles.button}>
@@ -118,14 +118,14 @@ export const PostScreen = ({ navigation, route }) => {
             </View>
           </View>
         </Modal>
-      </View>
+      
       <ScrollView>
-        <TouchableHighlight onPress={() => setModalVisible(true)}>
-          <Image source={{ uri: post.img }} style={styles.image} />
+        <TouchableHighlight onPress={() => setModalVisible(true)} style={styles.centeredView}>
+          <Image source={{ uri: post.img }} style={[globalStyles.image, display === 'PORTRAIT' ? {resizeMode: 'contain'} : null]} />
         </TouchableHighlight>
         <View style={styles.textWrap}>
           <TextInput 
-            style={styles.title}
+            style={globalStyles.title}
             onChangeText={setNewText}
             defaultValue={post.text}
             onBlur={textUpdateHandler}
@@ -172,15 +172,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingBottom: 20
   },
-  image: {
-    width: '100%',
-    height: 200,
-  },
+  // image: {
+  //   width: '100%',
+  //   height: 200,
+  // },
   textWrap: {
     padding: 10
-  },
-  title: {
-    fontFamily: 'open-regular'
   },
   buttonWrapper: {
     alignItems: 'center',

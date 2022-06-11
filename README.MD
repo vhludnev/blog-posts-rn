@@ -14,13 +14,19 @@
 
 | Main screen | Post screen | Zoom in image |
 | ------ | ------ | ------ |
-| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955856.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955863.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955860.jpg" width="200" alt="zoom-in screen" /> |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654943161157.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955863.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955860.jpg" width="200" alt="zoom-in screen" /> |
 
 <br/><br/>
 
 | Create post | Favourites tab | Side menu |
 | ------ | ------ | ------ |
-| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955867.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955873.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955870.jpg" width="200" alt="zoom-in screen" /> |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955873.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955870.jpg" width="200" alt="zoom-in screen" /> |
+
+<br/><br/>
+
+| Search results | Create post input |
+| ------ | ------ |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818485.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="post screen" /> |
 
 <br/><br/>
 

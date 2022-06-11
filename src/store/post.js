@@ -5,33 +5,48 @@ import { DB } from '../db'
 
 const loadPosts = createAsyncThunk(
    'postReducer/loadPosts',
-   async () => {
-      let posts = await DB.getPosts()
-      return posts.sort((a, b) => new Date(b.date) - new Date(a.date))
+   async (_, { rejectWithValue }) => {
+      try {
+         let posts = await DB.getPosts()
+         if (posts) {
+            return posts.sort((a, b) => new Date(b.date) - new Date(a.date))
+         } else {
+            return []
+         }
+      } catch (error) {
+         const message = (error.response && error.response.data &&
+            error.response.data.message) || error.message || error.toString()
+         return rejectWithValue(message)
+         //return rejectWithValue('no posts can be loaded now')
+      }
    }
 )
 
 const addPost = createAsyncThunk(
    'postReducer/addPost',
-   async (post) => {
-      const fileName = post.img.split('/').pop()
-      const noImgCheck = post.img.split(':')[0].includes('https')
-      const newPath = FileSystem.documentDirectory + fileName
-
+   async (post, { rejectWithValue }) => {
       try {
-         !noImgCheck && await FileSystem.moveAsync({
-            to: newPath,
-            from: post.img
-         })
-      } catch (e) {
-         console.log('Error:', e)
+         const fileName = post.img.split('/').pop()
+         const noImgCheck = post.img.split(':')[0].includes('https')
+         const newPath = FileSystem.documentDirectory + fileName
+
+         try {
+            !noImgCheck && await FileSystem.moveAsync({
+               to: newPath,
+               from: post.img
+            })
+         } catch (e) {
+            console.log('Error: ', e)
+         }
+
+         const payload = noImgCheck ? {...post} : { ...post, img: newPath }
+         const id = await DB.createPost(payload)
+         payload.id = id
+
+         return payload
+      } catch (err) {
+         return rejectWithValue('error adding a new post')
       }
-
-      const payload = noImgCheck ? {...post} : { ...post, img: newPath }
-      const id = await DB.createPost(payload)
-      payload.id = id
-
-      return payload
    }
 )
 
@@ -53,18 +68,24 @@ const textUpdatePost = createAsyncThunk(
 
 const removePost = createAsyncThunk(
    'postReducer/removePost',
-   async (id) => {
-      await DB.removePost(id)
-      return id
+   async (id, { rejectWithValue }) => {
+      try {
+         await DB.removePost(id)
+         return id
+      } catch(err) {
+         return rejectWithValue(err)
+      }
    }
 )
 
 
 const initialState = {
-  allPosts: [],
-  bookedPosts: [],
-  status: 'idle'
+   allPosts: [],
+   bookedPosts: [],
+   status: 'idle',
+   error: null
 }
+
 
 const postReducer = createSlice({
    name: 'post',
@@ -82,13 +103,14 @@ const postReducer = createSlice({
             bookedPosts: action.payload.filter(post => post.booked) /* || DATA.filter(post => post.booked) */,
          }
          /// the same as above: ///
-         //state.allPosts = action.payload
-         //state.status = 'success'
-         //state.bookedPosts = action.payload.filter(post => post.booked)
+         // state.allPosts = action.payload
+         // state.status = 'success'
+         // state.bookedPosts = action.payload.filter(post => post.booked)
       },
       [loadPosts.rejected]: (state, action) => {
          //state.allPosts = []
          state.status = 'failed'
+         state.error = action.payload
       },
       [addPost.fulfilled]: (state, action) => {
          state.allPosts.unshift(action.payload)
@@ -97,6 +119,10 @@ const postReducer = createSlice({
          //    ...state,
          //    allPosts: [{ ...action.payload }, ...state.allPosts]
          // }
+      },
+      [loadPosts.rejected]: (state, action) => {
+         state.status = 'failed'
+         state.error = action.payload
       },
       [textUpdatePost.fulfilled]: (state, action) => {
          const allPosts = state.allPosts.map(post => {
@@ -126,7 +152,11 @@ const postReducer = createSlice({
             allPosts: state.allPosts.filter(p => p.id !== action.payload),
             bookedPosts: state.bookedPosts.filter(p => p.id !== action.payload)
          }
-      }
+      },
+      [removePost.rejected]: (state, action) => {
+         state.status = 'failed'
+         state.error = action.payload
+      },
    }
  })
 
