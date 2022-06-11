@@ -21,9 +21,10 @@ const SearchBar = ({ term, onTermChange, onTermSubmit, refInput, clearSearch }) 
         //defaultValue={term}
         //onBlur={() => onTermChange(refInput.current.value)}
       />
-      <TouchableOpacity activeOpacity={0.7} style={styles.iconStyle} onPress={clearSearch} >
-        <Ionicons name="ios-close-sharp" size={24}  />
-      </TouchableOpacity>
+      {term ? (
+        <TouchableOpacity activeOpacity={0.7} style={styles.iconStyle} onPress={clearSearch} >
+          <Ionicons name="ios-close-sharp" size={24}  />
+        </TouchableOpacity>) : null}
     </View>
   )
 }

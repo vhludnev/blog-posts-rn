@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ScrollView, View, TextInput, StyleSheet, Image, Alert, LogBox, Dimensions, TouchableHighlight, Modal, Pressable  } from 'react-native'
+import { ScrollView, View, TextInput, StyleSheet, Image, Alert, LogBox, TouchableHighlight, Modal, Pressable } from 'react-native'
 import ImageZoom from 'react-native-image-pan-zoom'
 import { THEME, globalStyles } from '../theme'
 import { toogleBooked, removePost, textUpdatePost } from '../store/post'
@@ -13,12 +13,9 @@ export const PostScreen = ({ navigation, route }) => {
   const { id: postId } = route.params
   const [modalVisible, setModalVisible] = useState(false)
   const [newText, setNewText] = useState('')
-  //const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width)
 
   const { display, width, height } = useDimentions()
   const dispatch = useDispatch()
-
-  //const deviceHeight = Dimensions.get('window').height
 
   const post = useSelector(state =>
     state.post.allPosts.find(p => p.id === postId)
@@ -65,20 +62,10 @@ export const PostScreen = ({ navigation, route }) => {
     )
   }
 
-  useEffect(() => {
-    setNewText(post.text)
-  }, [])
-
-  // dinamically change view when screen turns:
   // useEffect(() => {
-  //   const updateWidth = () => setDeviceWidth(Dimensions.get('window').width)
+  //   setNewText(post.text)
+  // }, [])
 
-  //   Dimensions.addEventListener('change', updateWidth)
-
-  //   return () => { 
-  //     Dimensions.addEventListener('change', updateWidth).remove() 
-  //   }
-  // })
 
   if (!post) {
     return null
@@ -86,38 +73,37 @@ export const PostScreen = ({ navigation, route }) => {
 
   return (
     <>   
-        <Modal
-          //style={{ width: deviceWidth }}
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={[styles.centeredView, styles.modalView]}>
-              <ImageZoom 
-                cropWidth={width}
-                cropHeight={display === 'PORTRAIT' ? height + 25 : height}
-                imageWidth={width}
-                imageHeight={display === 'PORTRAIT' ? height : '100%'}
-                maxOverflow={0}>
-                <Image 
-                  source={{ uri: post.img }} 
-                  style={{ height: display === 'PORTRAIT' ? height : '100%', width: width, resizeMode: 'contain' }} 
-                />
-              </ImageZoom>
-              <View style={styles.button}>
-                <Pressable
-                  style={styles.buttonClose}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <View>
-                    <Ionicons name='close-circle-outline' color='#2196F3' size={35}/>
-                  </View>
-                </Pressable>
-              </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={[styles.centeredView, styles.modalView]}>
+            <ImageZoom 
+              cropWidth={width}
+              cropHeight={display === 'PORTRAIT' ? height + 25 : height}
+              imageWidth={width}
+              imageHeight={display === 'PORTRAIT' ? height : '100%'}
+              maxOverflow={0}>
+              <Image 
+                source={{ uri: post.img }} 
+                style={{ height: display === 'PORTRAIT' ? height : '100%', width: width, resizeMode: 'contain' }} 
+              />
+            </ImageZoom>
+            <View style={styles.button}>
+              <Pressable
+                style={styles.buttonClose}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <View>
+                  <Ionicons name='close-circle-outline' color='#2196F3' size={35}/>
+                </View>
+              </Pressable>
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
       
       <ScrollView>
         <TouchableHighlight onPress={() => setModalVisible(true)} style={styles.centeredView}>

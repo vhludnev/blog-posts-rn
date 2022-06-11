@@ -7,7 +7,7 @@ export const AboutScreen = ({}) => {
     <View style={globalStyles.center}>
       <Text>Best App for personal notes.</Text>
       <Text>
-        App version <Text style={styles.version}>1.2.5</Text>
+        App version <Text style={styles.version}>1.3.0</Text>
       </Text>
     </View>
   )

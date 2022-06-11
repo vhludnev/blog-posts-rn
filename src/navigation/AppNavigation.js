@@ -11,6 +11,7 @@ import { PostScreen } from '../screens/PostScreen'
 import { BookedScreen } from '../screens/BookedScreen'
 import { AboutScreen } from '../screens/AboutScreen'
 import { CreateScreen } from '../screens/CreateScreen'
+import { SearchScreen } from '../screens/SearchScreen'
 import { AppHeaderIcon } from '../components/AppHeaderIcon';
 import { Ionicons } from '@expo/vector-icons'
 import { THEME/* , globalStyles */ } from '../theme'
@@ -77,6 +78,22 @@ const MainStack = () => {
         name="Create" 
         component={CreateScreen} 
         options={{title: 'Create post'}}
+      />
+      <Stack.Screen 
+        name="Search" 
+        component={SearchScreen} 
+        options={({ navigation }) => ({
+          title: 'Search result'/* ,
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+              <Item
+                title='Back'
+                iconName='arrow-back-outline'
+                onPress={() => navigation.jumpTo('Main')}
+              />
+            </HeaderButtons>
+          ) */      
+        })}
       />
       <Stack.Screen 
         name="Post" 

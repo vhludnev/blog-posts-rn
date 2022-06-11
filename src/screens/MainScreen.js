@@ -8,7 +8,7 @@ import { THEME, globalStyles } from '../theme'
 
 export const MainScreen = ({ navigation }) => {
   const [term, setTerm] = useState('')
-  const [allPostsArr, setAllPostsArr] = useState([])
+  //const [allPostsArr, setAllPostsArr] = useState([])
   const refInput = useRef('')
   const openPostHandler = post => {
     navigation.navigate('Post', {
@@ -33,14 +33,21 @@ export const MainScreen = ({ navigation }) => {
   const postsData = useSelector(state => state.post)
   const { allPosts, status } = postsData
 
-  useEffect(() => {
-    setAllPostsArr(allPosts)
-  },[allPosts])
+  // useEffect(() => {
+  //   setAllPostsArr(allPosts)
+  // },[allPosts])
   
   const searchHandler = (term) => {
-    return setAllPostsArr(allPosts.filter(post => post.text.toLowerCase().includes(term.toLowerCase())))
+    if (term.length) {
+      navigation.navigate('Search', {
+        term,
+        onOpen: openPostHandler
+      })
+      setTerm('')
+    } 
+    //return setAllPostsArr(allPosts.filter(post => post.text.toLowerCase().includes(term.toLowerCase())))
   }
-
+//console.log(allPostsArr)
   if (status === 'loading') {
     return (
       <View style={globalStyles.center}>
@@ -57,13 +64,13 @@ export const MainScreen = ({ navigation }) => {
           onTermChange={setTerm}
           onTermSubmit={() => searchHandler(term)} 
           refInput={refInput}
-          clearSearch={() => {setTerm(''); setAllPostsArr(allPosts)}}
+          clearSearch={() => {setTerm('')/* ; setAllPostsArr(allPosts) */}}
         />
       )}
-      {refInput.current && allPostsArr && allPostsArr.length !== allPosts.length ? (
+      {/* {refInput.current && allPostsArr && allPostsArr.length !== allPosts.length ? (
         <Text style={{marginLeft: 10}}>We have found {allPostsArr.length} {allPostsArr.length === 1 ? 'result' : 'results'} </Text>
-      ) : null}
-      <PostList data={allPostsArr} onOpen={openPostHandler} />
+      ) : null} */}
+      <PostList data={allPosts} onOpen={openPostHandler} />
     </>
   )
 }

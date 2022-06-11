@@ -144,7 +144,7 @@ const postReducer = createSlice({
          })
          state.allPosts = allPosts
          state.bookedPosts = allPosts.filter(post => post.booked)
-         return state
+         //return state
       },
       [removePost.fulfilled]: (state, action) => {
          return {

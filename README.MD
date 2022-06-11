@@ -24,9 +24,9 @@
 
 <br/><br/>
 
-| Search results | Create post input |
+| Search result | Create post input |
 | ------ | ------ |
-| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818485.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="post screen" /> |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654971508945.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="post screen" /> |
 
 <br/><br/>
 
