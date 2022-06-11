@@ -18,15 +18,15 @@
 
 <br/><br/>
 
-| Create post | Favourites tab | Side menu |
+| Search result | Favourites tab | Side menu |
 | ------ | ------ | ------ |
-| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955873.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955870.jpg" width="200" alt="zoom-in screen" /> |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654971508945.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955873.jpg" width="200" alt="post screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955870.jpg" width="200" alt="zoom-in screen" /> |
 
 <br/><br/>
 
-| Search result | Create post input |
+| Create post | Create post input |
 | ------ | ------ |
-| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654971508945.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="post screen" /> |
+| <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654522955867.jpg" width="200" alt="main screen" /> | <img src="https://github.com/vhludnev/blog-posts-rn/blob/main/assets/previews/1654942818479.jpg" width="200" alt="post screen" /> |
 
 <br/><br/>
 
